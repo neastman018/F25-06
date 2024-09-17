@@ -1,0 +1,16 @@
+{
+    "zones": 
+        [{"nodes": 
+            [
+                {"id": 0, "connections": [{"connects_to": 1}]}, 
+                {"id": 1, "connections": [{"connects_to": 0}, {"connects_to": 2}]}, 
+                {"id": 2, "connections": [{"connects_to": 1}, {"connects_to": 3}]}, 
+                {"id": 3, "connections": [{"connects_to": 2}, {"connects_to": 4}]}, 
+                {"id": 4, "connections": [{"connects_to": 3}, {"connects_to": 5}]}, 
+                {"id": 5, "connections": [{"connects_to": 4}, {"connects_to": 6}]}, 
+                {"id": 6, "connections": [{"connects_to": 5}, {"connects_to": 7}]}, 
+                {"id": 7, "connections": [{"connects_to": 6}, {"connects_to": 8}]}, 
+                {"id": 8, "connections": [{"connects_to": 7}]}
+            ]   
+        }]
+}
