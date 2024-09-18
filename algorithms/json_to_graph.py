@@ -4,15 +4,20 @@ import json
 class Graph:
     def __init__(self):
         self.vertices = {}
+        self.vert_coord = {}
 
-    def add_vertex(self, vertex):
+    def add_vertex(self, vertex, coords):
         self.vertices[vertex] = {}
+        self.vert_coord[vertex] = coords
 
     def add_edge(self, start, end, cost):
         self.vertices[start][end] = cost
 
     def get_neighbors(self, vertex):
         return self.vertices[vertex]
+    
+    def get_coords(self, vertex):
+        return self.vert_coord[vertex]
 
 def json_to_graph(json_data):
     graph = Graph()
@@ -22,7 +27,8 @@ def json_to_graph(json_data):
     for zone in data["zones"]:
         for node in zone["nodes"]:
             node_id = node["id"]
-            graph.add_vertex(node_id)
+            node_coords = (node["pose"][0], node["pose"][1])
+            graph.add_vertex(node_id, node_coords)
     
     for zone in data["zones"]:
         for node in zone["nodes"]:
@@ -39,5 +45,8 @@ if __name__ == "__main__":
 
     # Test the graph
     print(graph.get_neighbors("node_001"))
+    print(graph.get_coords("node_001"))
     print(graph.get_neighbors("node_002"))
+    print(graph.get_coords("node_002"))
     print(graph.get_neighbors("node_003"))
+    print(graph.get_coords("node_003"))

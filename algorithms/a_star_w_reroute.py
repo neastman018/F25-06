@@ -1,5 +1,6 @@
 import heapq
 
+
 """
 A* algorithm implementation for finding the shortest path in a graph.
 Args:
@@ -52,6 +53,16 @@ def heuristic(node, goal):
     (x2, y2) = goal
     return abs(x1 - x2) + abs(y1 - y2)
 
+
+def run_a_star(graph, agents):
+
+    for agent in agents:
+        src, dest = agent
+        path = a_star(graph, src, dest, heuristic)
+        print("Path found:", path)
+
+
+
 # Example usage
 graph = {
     (0, 0): [((0, 1), 1), ((1, 0), 1)],
@@ -64,3 +75,4 @@ start = (0, 0)
 goal = (1, 1)
 path = a_star(graph, start, goal, heuristic)
 print("Path found:", path)  # Output: Path found: [(0, 0), (1, 0), (1, 1)]
+

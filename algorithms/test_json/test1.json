@@ -68,16 +68,7 @@
             ],
             "connections": [
               {
-                "connects_to": "node_004",
-                "reachable_from": [
-                  "node_002"
-                ],
-                "type": "normal",
-                "blocking_neighbours": [],
-                "control_points": []
-              },
-              {
-                "connects_to": "node_005",
+                "connects_to": "node_001",
                 "reachable_from": [
                   "node_002"
                 ],

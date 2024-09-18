@@ -14,49 +14,72 @@ class Graph:
         return self.vertices[vertex]
 
 def calculate_heuristic(start, goal):
-    # Calculate the heuristic value between two vertices (e.g., Euclidean distance)
-    # Replace this with your own heuristic function
-    return 0
+    (x1, y1) = start
+    (x2, y2) = goal
+    return abs(x1 - x2) + abs(y1 - y2)
 
-def d_star(graph, start, goal):
-    open_list = [(calculate_heuristic(start, goal), start)]
-    g_values = {start: 0}
+def d_star(graph, start, goal, reservation_table):
+    open_list = [(calculate_heuristic(start, goal), start, 0)]
+    g_values = {(start, 0): 0}
     predecessors = {}
 
     while open_list:
-        _, current = heapq.heappop(open_list)
+        current_cost, current, current_time = heapq.heappop(open_list)
 
         if current == goal:
-            path = []
-            while current in predecessors:
-                path.insert(0, current)
-                current = predecessors[current]
-            path.insert(0, start)
-            return path
+            return reconstruct_path(predecessors, current, current_time)
 
         for neighbor, cost in graph.get_neighbors(current).items():
-            new_g = g_values[current] + cost
+            tentative_g_score = g_values[(current, current_time)] + cost
+            neighbor_time = current_time + 1
 
-            if neighbor not in g_values or new_g < g_values[neighbor]:
-                g_values[neighbor] = new_g
-                f_value = new_g + calculate_heuristic(neighbor, goal)
-                heapq.heappush(open_list, (f_value, neighbor))
-                predecessors[neighbor] = current
+            if (neighbor, neighbor_time) not in g_values or tentative_g_score < g_values[(neighbor, neighbor_time)]:
+                if not is_occupied(neighbor, neighbor_time, reservation_table):
+                    g_values[(neighbor, neighbor_time)] = tentative_g_score
+                    heapq.heappush(open_list, (tentative_g_score + calculate_heuristic(neighbor, goal), neighbor, neighbor_time))
+                    predecessors[(neighbor, neighbor_time)] = (current, current_time)
 
     return None
 
+def is_occupied(node, time, reservation_table):
+    return node in reservation_table and time in reservation_table[node]
+
+def reconstruct_path(predecessors, current, current_time):
+    total_path = [(current, current_time)]
+    while (current, current_time) in predecessors:
+        current, current_time = predecessors[(current, current_time)]
+        total_path.append((current, current_time))
+    total_path.reverse()
+    return total_path
+
+def multi_agent_path_planning(graph, agents):
+    reservation_table = {}
+    paths = {}
+    for agent in agents:
+        start, goal = agent
+        path = d_star(graph, start, goal, reservation_table)
+        if path:
+            paths[agent] = path
+            for node, time in path:
+                if node not in reservation_table:
+                    reservation_table[node] = set()
+                reservation_table[node].add(time)
+        else:
+            paths[agent] = None
+    return paths
+
 # Example usage
 graph = Graph()
-graph.add_vertex('A')
-graph.add_vertex('B')
-graph.add_vertex('C')
-graph.add_vertex('D')
-graph.add_edge('A', 'B', 1)
-graph.add_edge('B', 'C', 2)
-graph.add_edge('C', 'D', 3)
-graph.add_edge('A', 'D', 10)
+graph.add_vertex((0, 0))
+graph.add_vertex((0, 1))
+graph.add_vertex((1, 0))
+graph.add_vertex((1, 1))
+graph.add_edge((0, 0), (0, 1), 1)
+graph.add_edge((0, 1), (1, 1), 1)
+graph.add_edge((1, 1), (1, 0), 1)
+graph.add_edge((1, 0), (0, 0), 1)
 
-start_vertex = 'A'
-goal_vertex = 'D'
-path = d_star(graph, start_vertex, goal_vertex)
-print(path)
+agents = [((0, 0), (1, 1)), ((0, 1), (1, 0))]
+paths = multi_agent_path_planning(graph, agents)
+for agent, path in paths.items():
+    print(f"Agent {agent} path: {path}")
