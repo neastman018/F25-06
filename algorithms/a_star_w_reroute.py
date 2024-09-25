@@ -11,7 +11,8 @@ Args:
 Returns:
     list or None: The shortest path from the start node to the goal node as a list of nodes. If no path is found, returns None.
 """
-def a_star(graph, start, goal, heuristic):
+def a_star(json_graph, start, goal, heuristic):
+    graph = json_graph.vertices
     open_set = []
     heapq.heappush(open_set, (0, start))
     
@@ -20,7 +21,7 @@ def a_star(graph, start, goal, heuristic):
     g_score[start] = 0
     
     f_score = {node: float('inf') for node in graph}
-    f_score[start] = heuristic(start, goal)
+    f_score[start] = heuristic(json_graph.get_coords(start), json_graph.get_coords(goal))
     
     while open_set:
         current = heapq.heappop(open_set)[1]
@@ -28,13 +29,13 @@ def a_star(graph, start, goal, heuristic):
         if current == goal:
             return reconstruct_path(came_from, current)
         
-        for neighbor, cost in graph[current]:
+        for neighbor, cost in graph[current].items():
             tentative_g_score = g_score[current] + cost
             
             if tentative_g_score < g_score[neighbor]:
                 came_from[neighbor] = current
                 g_score[neighbor] = tentative_g_score
-                f_score[neighbor] = g_score[neighbor] + heuristic(neighbor, goal)
+                f_score[neighbor] = g_score[neighbor] + heuristic(json_graph.get_coords(neighbor), json_graph.get_coords(goal))
                 heapq.heappush(open_set, (f_score[neighbor], neighbor))
     
     return None
@@ -54,25 +55,25 @@ def heuristic(node, goal):
     return abs(x1 - x2) + abs(y1 - y2)
 
 
-def run_a_star(graph, agents):
+def run_a_star(json_graph, agents):
 
     for agent in agents:
         src, dest = agent
-        path = a_star(graph, src, dest, heuristic)
-        print("Path found:", path)
+        path = a_star(json_graph, src, dest, heuristic)
+        print("Agent: (" + src + ", " + dest + "): Path found:", path)
 
 
 
-# Example usage
-graph = {
-    (0, 0): [((0, 1), 1), ((1, 0), 1)],
-    (0, 1): [((0, 0), 1), ((1, 1), 1)],
-    (1, 0): [((0, 0), 1), ((1, 1), 1)],
-    (1, 1): [((1, 0), 1), ((0, 1), 1)]
-}
+# # Example usage
+# graph = {
+#     (0, 0): [((0, 1), 1), ((1, 0), 1)],
+#     (0, 1): [((0, 0), 1), ((1, 1), 1)],
+#     (1, 0): [((0, 0), 1), ((1, 1), 1)],
+#     (1, 1): [((1, 0), 1), ((0, 1), 1)]
+# }
 
-start = (0, 0)
-goal = (1, 1)
-path = a_star(graph, start, goal, heuristic)
-print("Path found:", path)  # Output: Path found: [(0, 0), (1, 0), (1, 1)]
+# start = (0, 0)
+# goal = (1, 1)
+# path = a_star(graph, start, goal, heuristic)
+# print("Path found:", path)  # Output: Path found: [(0, 0), (1, 0), (1, 1)]
 
