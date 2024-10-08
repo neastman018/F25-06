@@ -1,0 +1,106 @@
+{
+    "zones": [
+      {
+        "id": "output_gate_1",
+        "constraints": {
+          "max_velocity": 0.8,
+          "max_lateral_acceleration": 0.6,
+          "max_corner_size": 1,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6
+        },
+        "pose": [
+          0,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "node_001",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0,
+              0,
+              0
+            ],
+            "connections": [
+              {
+                "connects_to": "node_002",
+                "reachable_from": [
+                    "node_004"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_002",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              1,
+              0,
+              0
+            ],
+            "connections": [
+              {
+                "connects_to": "node_003",
+                "reachable_from": [
+                  "node_001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_003",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              1,
+              -1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_004",
+                "reachable_from": [
+                  "node_002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_004",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0,
+              -1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_001",
+                "reachable_from": [
+                  "node_003"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+}

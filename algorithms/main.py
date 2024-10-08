@@ -5,6 +5,7 @@ import d_star_w_reroute as d_star
 import json_to_graph as jtg
 import networkx as nx
 import matplotlib.pyplot as plt
+import json_to_multi as jtm
 # Driver Code
 
 def convert_to_nx_graph(graph):
@@ -18,10 +19,11 @@ def convert_to_nx_graph(graph):
 def main():
     # TODO: implement time and space complexity analysis and find metrics for the algorithms
     # Define the graph from the interperter
-    j_graph = jtg.json_to_graph('algorithms/test_json/test1.json')
+    j_graph = jtg.json_to_graph('algorithms/test_json/test2.json')
+    #j_graph = jtm.json_to_multi('algorithms/test_json/test3.json')
 
     # Define the source and destination
-    agents = [("node_001", "node_003"), ("node_002", "node_001"), ("node_003", "node_002")]
+    agents = [("node_001", "node_003"), ("node_002", "node_001"), ("node_003", "node_002"),("node_001","node_009")]
 
     # Run the search algorithm requested by the user
     d_star.d_star_search(j_graph, agents[0][0], agents[0][1])
