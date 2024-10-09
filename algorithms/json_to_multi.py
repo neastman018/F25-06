@@ -1,13 +1,33 @@
-import json_to_graph as jtg
-from math import sqrt
+import json
+# import matplotlib.pyplot as plt
 
-def euclidean_distance(coord1, coord2):
-    return sqrt((coord1[0] - coord2[0]) ** 2 + (coord1[1] - coord2[1]) ** 2)
+class Graph:
+    def __init__(self):
+        self.vertices = {}
+        self.vert_coord = {}
+        self.vert_type = {}
 
-def json_to_multi(json_data):
-    graph = jtg.Graph()
+    def add_vertex(self, vertex, coords, vtype):
+        self.vertices[vertex] = {}
+        self.vert_coord[vertex] = coords
+        self.vert_type[vertex] = vtype
+
+    def add_edge(self, start, end, cost):
+        self.vertices[start][end] = cost
+
+    def get_neighbors(self, vertex):
+        return self.vertices[vertex]
+    
+    def get_coords(self, vertex):
+        return self.vert_coord[vertex]
+    
+    def get_vertex_type(self, vertex):
+        return self.vert_type[vertex]
+
+def json_to_graph(json_data):
+    graph = Graph()
     with open(json_data,'r') as file:
-        data = jtg.json.load(file)
+        data = json.load(file)
 
     node_coords_map = {}
 
@@ -23,30 +43,27 @@ def json_to_multi(json_data):
             node_id = node["id"]
             for connection in node["connections"]:
                 connect_to = connection["connects_to"]
-                cost = euclidean_distance(node_coords_map[node_id], node_coords_map[connect_to])
-                graph.add_edge(node_id, connect_to, cost)
+                if '/' in connect_to:
+                    xx,zone_id, connect_to = connect_to.split('/')
+                    connect_to_coords = None
+                    for z in data["zones"]:
+                        if z["id"] == zone_id:
+                            for n in z["nodes"]:
+                                if n["id"] == connect_to:
+                                    connect_to_coords = (n["pose"][0], n["pose"][1])
+                                    break
+                            break
+                    if connect_to_coords:
+                        cost = 1
+                        graph.add_edge(node_id, connect_to, cost)
+                else:
+                    cost = 1
+                    graph.add_edge(node_id, connect_to, cost)
 
-    # Calculate the maximum distance as the norm of all distances
-    distances = []
-    for node_id, coords1 in node_coords_map.items():
-        for other_node_id, coords2 in node_coords_map.items():
-            if node_id != other_node_id:
-                distance = euclidean_distance(coords1, coords2)
-                distances.append(distance)
-    
-    max_distance = sum(distances) / len(distances) if distances else 0
-
-    for node_id, coords1 in node_coords_map.items():
-        for other_node_id, coords2 in node_coords_map.items():
-            if node_id != other_node_id:
-                distance = euclidean_distance(coords1, coords2)
-                if distance <= max_distance:
-                    graph.add_edge(node_id, other_node_id, distance)
-    
     return graph
 
 if __name__ == "__main__":
-    graph = json_to_multi('algorithms/test_json/test3.json')
+    graph = json_to_graph('algorithms/test_json/test1.json')
 
     # Test the graph
     print(graph.get_neighbors("node_001"))
