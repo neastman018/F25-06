@@ -48,7 +48,8 @@ def json_to_multi(json_data):
                     graph.add_edge(node_id, connect_to, cost)
 
     # Calculate the maximum distance as the norm of all distances for connected nodes
-    max_distance = 0
+    avg_distance = 0 
+    counter = 0
     for zone in data["zones"]:
         for node in zone["nodes"]:
             node_id = node["id"]
@@ -57,15 +58,16 @@ def json_to_multi(json_data):
                 if '/' in connect_to:
                     xx, zone_id, connect_to = connect_to.split('/')
                 distance = euclidean_distance(node_coords_map[node_id], node_coords_map[connect_to])
-                if distance > max_distance:
-                    max_distance = distance
+                counter += 1
+                avg_distance = distance
+    avg_distance /= counter
 
     # Add connections to nodes if other nodes are within the max distance
     for node_id1, coords1 in node_coords_map.items():
         for node_id2, coords2 in node_coords_map.items():
             if node_id1 != node_id2:
                 distance = euclidean_distance(coords1, coords2)
-                if distance <= max_distance:
+                if distance <= avg_distance:
                     graph.add_edge(node_id1, node_id2, distance)
     #Calculate the maximum distance as the norm of all distances
     # max_distance = 0
