@@ -57,11 +57,13 @@ def heuristic(node, goal):
 
 def run_a_star(json_graph, agents):
     paths = {}
-    for agent, route in agents.items():
-        src, dest = route
-        path = a_star(json_graph, src, dest, heuristic)
-        paths[agent] = path, list(range(len(path)+1))
-        print("Agent: " + str(agent) + ": Path found:", path)
+    for agent, routes in agents.items():
+        paths[agent] = []
+        for route in routes:
+            src, dest = route
+            path = a_star(json_graph, src, dest, heuristic)
+            paths[agent].append(path) #, list(range(len(path)+1))
+            print("Agent: " + str(agent) + ": Path found:", path)
 
     return paths
 

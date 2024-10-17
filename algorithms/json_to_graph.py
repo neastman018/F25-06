@@ -35,7 +35,16 @@ def json_to_graph(json_data):
         for node in zone["nodes"]:
             node_id = node["id"]
             node_coords = (node["pose"][0], node["pose"][1])
-            graph.add_vertex(node_id, node_coords, node["type"])
+            node_type = "init"
+            if(node["type"] != "target"):
+                node_type = "init"
+            elif(node["type"] == "target"):
+                if "target_reservation_cost_linear" in node:
+                    node_type = "input"
+                else:
+                    node_type = "bin"
+
+            graph.add_vertex(node_id, node_coords, node_type)
             node_coords_map[node_id] = node_coords
 
     for zone in data["zones"]:
