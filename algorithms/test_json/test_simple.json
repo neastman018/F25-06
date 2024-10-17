@@ -1,0 +1,2561 @@
+{
+    "zones": [
+      {
+        "id": "sorting_gate_1",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          -2.4,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "node_1",
+            "type": "target",
+            "clear_distance": 0.3,
+            "target_reservation_cost_linear": 110.57,
+            "target_reservation_cost_quad": 0,
+            "virtual_target_reservation_cost_linear": 0,
+            "virtual_target_reservation_cost_quad": 0,
+            "check_in_reservation_cost_linear": 110.57,
+            "check_in_reservation_cost_quad": 0,
+            "pose": [
+              -14.9,
+              -5.3,
+              3.14
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1000a",
+                "reachable_from": [
+                  "node_1015a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ],
+            "terminal": true,
+            "target_type": "input"
+          },
+          {
+            "id": "node_1a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              -6.5,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1000a",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1000a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              -5.3,
+              2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1000",
+                "reachable_from": [
+                  "node_1",
+                  "node_1a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1000",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              -4.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1001",
+                "reachable_from": [
+                  "node_1000a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1001",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              -3.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1002",
+                "reachable_from": [
+                  "node_1000"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1002",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              -2.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1003",
+                "reachable_from": [
+                  "node_1001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1003",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              -1.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1004",
+                "reachable_from": [
+                  "node_1002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1004",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              -0.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1005",
+                "reachable_from": [
+                  "node_1003"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1005",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              0.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1006",
+                "reachable_from": [
+                  "node_1004"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1006",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              1.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1007",
+                "reachable_from": [
+                  "node_1005"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1007",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              2.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_1001",
+                "reachable_from": [
+                  "node_1006"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_1001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/cross_gate_1/node_corner_1001",
+                "reachable_from": [
+                  "node_1007"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "/cross_gate_1/node_crossing_1002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1008",
+                "reachable_from": [
+                  "/cross_gate_1/node_corner_1003"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1008",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              2.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1009",
+                "reachable_from": [
+                  "/cross_gate_1/node_crossing_1002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1009",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              1.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1010",
+                "reachable_from": [
+                  "node_1008"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1010",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              0.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1011",
+                "reachable_from": [
+                  "node_1009"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1011",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              -0.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1012",
+                "reachable_from": [
+                  "node_1010"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1012",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              -1.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1013",
+                "reachable_from": [
+                  "node_1011"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1013",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              -2.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1014",
+                "reachable_from": [
+                  "node_1012"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1014",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              -3.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1015",
+                "reachable_from": [
+                  "node_1013"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1015",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              -4.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1015a",
+                "reachable_from": [
+                  "node_1014"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_1015a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              -5.3,
+              -2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_1",
+                "reachable_from": [
+                  "node_1015"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cross_gate_1",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          -2.4,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "/sorting_gate_1/node_crossing_1001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_1001",
+                "reachable_from": [
+                  "/sorting_gate_1/node_1007"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_1001",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -16.1,
+              5.1,
+              0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_1002",
+                "reachable_from": [
+                  "/sorting_gate_1/node_crossing_1001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_1002",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              -14.9,
+              5.1,
+              0
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_1003",
+                "reachable_from": [
+                  "node_corner_1001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_1003a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              6.3,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_1003",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_1003",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              5.1,
+              -0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_1002",
+                "reachable_from": [
+                  "node_corner_1002",
+                  "node_corner_1003a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_1002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -13.7,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/sorting_gate_1/node_1008",
+                "reachable_from": [
+                  "node_corner_1003"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      },
+  
+  
+  
+      {
+        "id": "sorting_gate_2",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          0,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "node_2",
+            "type": "target",
+            "clear_distance": 0.3,
+            "target_reservation_cost_linear": 110.57,
+            "target_reservation_cost_quad": 0,
+            "virtual_target_reservation_cost_linear": 0,
+            "virtual_target_reservation_cost_quad": 0,
+            "check_in_reservation_cost_linear": 110.57,
+            "check_in_reservation_cost_quad": 0,
+            "pose": [
+              -7.7,
+              -5.3,
+              3.14
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2000a",
+                "reachable_from": [
+                  "node_2015a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ],
+            "terminal": true,
+            "target_type": "input"
+          },
+          {
+            "id": "node_2a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              -6.5,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2000a",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2000a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              -5.3,
+              2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2000",
+                "reachable_from": [
+                  "node_2",
+                  "node_2a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2000",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              -4.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2001",
+                "reachable_from": [
+                  "node_2000a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2001",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              -3.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2002",
+                "reachable_from": [
+                  "node_2000"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2002",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              -2.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2003",
+                "reachable_from": [
+                  "node_2001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2003",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              -1.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2004",
+                "reachable_from": [
+                  "node_2002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2004",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              -0.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2005",
+                "reachable_from": [
+                  "node_2003"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2005",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              0.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2006",
+                "reachable_from": [
+                  "node_2004"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2006",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              1.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2007",
+                "reachable_from": [
+                  "node_2005"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2007",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              2.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_2001",
+                "reachable_from": [
+                  "node_2006"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_2001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/cross_gate_2/node_corner_2001",
+                "reachable_from": [
+                  "node_2007"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "/cross_gate_2/node_crossing_2002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2008",
+                "reachable_from": [
+                  "/cross_gate_2/node_corner_2003"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2008",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              2.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2009",
+                "reachable_from": [
+                  "/cross_gate_2/node_crossing_2002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2009",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              1.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2010",
+                "reachable_from": [
+                  "node_2008"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2010",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              0.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2011",
+                "reachable_from": [
+                  "node_2009"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2011",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              -0.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2012",
+                "reachable_from": [
+                  "node_2010"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2012",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              -1.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2013",
+                "reachable_from": [
+                  "node_2011"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2013",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              -2.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2014",
+                "reachable_from": [
+                  "node_2012"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2014",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              -3.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2015",
+                "reachable_from": [
+                  "node_2013"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2015",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              -4.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2015a",
+                "reachable_from": [
+                  "node_2014"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_2015a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              -5.3,
+              -2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_2",
+                "reachable_from": [
+                  "node_2015"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cross_gate_2",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          0,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "/sorting_gate_2/node_crossing_2001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_2001",
+                "reachable_from": [
+                  "/sorting_gate_2/node_2007"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_2001",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -8.9,
+              5.1,
+              0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_2002",
+                "reachable_from": [
+                  "/sorting_gate_2/node_crossing_2001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_2002",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              -7.7,
+              5.1,
+              0
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_2003",
+                "reachable_from": [
+                  "node_corner_2001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_2003a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              6.3,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_2003",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_2003",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              5.1,
+              -0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_2002",
+                "reachable_from": [
+                  "node_corner_2002",
+                  "node_corner_2003a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_2002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              -6.5,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/sorting_gate_2/node_2008",
+                "reachable_from": [
+                  "node_corner_2003"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      },
+  
+  
+  
+      {
+        "id": "sorting_gate_3",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          0,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "node_3",
+            "type": "target",
+            "clear_distance": 0.3,
+            "target_reservation_cost_linear": 110.57,
+            "target_reservation_cost_quad": 0,
+            "virtual_target_reservation_cost_linear": 0,
+            "virtual_target_reservation_cost_quad": 0,
+            "check_in_reservation_cost_linear": 110.57,
+            "check_in_reservation_cost_quad": 0,
+            "pose": [
+              1.9,
+              -5.3,
+              3.14
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3000a",
+                "reachable_from": [
+                  "node_3015a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ],
+            "terminal": true,
+            "target_type": "input"
+          },
+          {
+            "id": "node_3a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              -6.5,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3000a",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3000a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              -5.3,
+              2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3000",
+                "reachable_from": [
+                  "node_3",
+                  "node_3a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3000",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              -4.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3001",
+                "reachable_from": [
+                  "node_3000a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3001",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              -3.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3002",
+                "reachable_from": [
+                  "node_3000"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3002",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              -2.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3003",
+                "reachable_from": [
+                  "node_3001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3003",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              -1.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3004",
+                "reachable_from": [
+                  "node_3002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3004",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              -0.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3005",
+                "reachable_from": [
+                  "node_3003"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3005",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              0.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3006",
+                "reachable_from": [
+                  "node_3004"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3006",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              1.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3007",
+                "reachable_from": [
+                  "node_3005"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3007",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              2.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_3001",
+                "reachable_from": [
+                  "node_3006"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_3001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/cross_gate_3/node_corner_3001",
+                "reachable_from": [
+                  "node_3007"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "/cross_gate_3/node_crossing_3002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3008",
+                "reachable_from": [
+                  "/cross_gate_3/node_corner_3003"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3008",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              2.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3009",
+                "reachable_from": [
+                  "/cross_gate_3/node_crossing_3002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3009",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              1.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3010",
+                "reachable_from": [
+                  "node_3008"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3010",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              0.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3011",
+                "reachable_from": [
+                  "node_3009"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3011",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              -0.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3012",
+                "reachable_from": [
+                  "node_3010"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3012",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              -1.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3013",
+                "reachable_from": [
+                  "node_3011"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3013",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              -2.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3014",
+                "reachable_from": [
+                  "node_3012"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3014",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              -3.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3015",
+                "reachable_from": [
+                  "node_3013"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3015",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              -4.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3015a",
+                "reachable_from": [
+                  "node_3014"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_3015a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              -5.3,
+              -2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_3",
+                "reachable_from": [
+                  "node_3015"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cross_gate_3",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          0,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "/sorting_gate_3/node_crossing_3001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_3001",
+                "reachable_from": [
+                  "/sorting_gate_3/node_3007"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_3001",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              0.7,
+              5.1,
+              0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_3002",
+                "reachable_from": [
+                  "/sorting_gate_3/node_crossing_3001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_3002",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              1.9,
+              5.1,
+              0
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_3003",
+                "reachable_from": [
+                  "node_corner_3001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_3003a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              6.3,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_3003",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_3003",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              5.1,
+              -0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_3002",
+                "reachable_from": [
+                  "node_corner_3002",
+                  "node_corner_3003a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_3002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              3.1,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/sorting_gate_3/node_3008",
+                "reachable_from": [
+                  "node_corner_3003"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      },
+  
+  
+      
+      {
+        "id": "sorting_gate_4",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          2.4,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "node_4",
+            "type": "target",
+            "clear_distance": 0.3,
+            "target_reservation_cost_linear": 110.57,
+            "target_reservation_cost_quad": 0,
+            "virtual_target_reservation_cost_linear": 0,
+            "virtual_target_reservation_cost_quad": 0,
+            "check_in_reservation_cost_linear": 110.57,
+            "check_in_reservation_cost_quad": 0,
+            "pose": [
+              9.1,
+              -5.3,
+              3.14
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4000a",
+                "reachable_from": [
+                  "node_4015a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ],
+            "terminal": true,
+            "target_type": "input"
+          },
+          {
+            "id": "node_4a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              -6.5,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4000a",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4000a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              -5.3,
+              2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4000",
+                "reachable_from": [
+                  "node_4",
+                  "node_4a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4000",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              -4.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4001",
+                "reachable_from": [
+                  "node_4000a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4001",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              -3.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4002",
+                "reachable_from": [
+                  "node_4000"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4002",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              -2.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4003",
+                "reachable_from": [
+                  "node_4001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4003",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              -1.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4004",
+                "reachable_from": [
+                  "node_4002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4004",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              -0.1,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4005",
+                "reachable_from": [
+                  "node_4003"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4005",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              0.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4006",
+                "reachable_from": [
+                  "node_4004"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4006",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              1.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4007",
+                "reachable_from": [
+                  "node_4005"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4007",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              2.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_4001",
+                "reachable_from": [
+                  "node_4006"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_4001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/cross_gate_4/node_corner_4001",
+                "reachable_from": [
+                  "node_4007"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "/cross_gate_4/node_crossing_4002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4008",
+                "reachable_from": [
+                  "/cross_gate_4/node_corner_4003"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4008",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              2.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4009",
+                "reachable_from": [
+                  "/cross_gate_4/node_crossing_4002"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4009",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              1.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4010",
+                "reachable_from": [
+                  "node_4008"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4010",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              0.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4011",
+                "reachable_from": [
+                  "node_4009"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4011",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              -0.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4012",
+                "reachable_from": [
+                  "node_4010"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4012",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              -1.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4013",
+                "reachable_from": [
+                  "node_4011"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4013",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              -2.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4014",
+                "reachable_from": [
+                  "node_4012"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4014",
+            "type": "target",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              -3.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4015",
+                "reachable_from": [
+                  "node_4013"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4015",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              -4.1,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4015a",
+                "reachable_from": [
+                  "node_4014"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_4015a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              -5.3,
+              -2.35
+            ],
+            "connections": [
+              {
+                "connects_to": "node_4",
+                "reachable_from": [
+                  "node_4015"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cross_gate_4",
+        "constraints": {
+          "max_corner_size": 1,
+          "max_lateral_acceleration": 0.8,
+          "max_longitudinal_acceleration": 0.8,
+          "max_longitudinal_deceleration": 0.6,
+          "max_velocity": 0.8,
+          "max_yaw_rate": 2,
+          "max_yaw_acceleration": 2
+        },
+        "pose": [
+          2.4,
+          0,
+          0
+        ],
+        "type": "fixed",
+        "nodes": [
+          {
+            "id": "/sorting_gate_4/node_crossing_4001",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              3.9,
+              1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_4001",
+                "reachable_from": [
+                  "/sorting_gate_4/node_4007"
+                ],
+                "type": "entry",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_4001",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              7.9,
+              5.1,
+              0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_4002",
+                "reachable_from": [
+                  "/sorting_gate_4/node_crossing_4001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_4002",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              9.1,
+              5.1,
+              0
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_4003",
+                "reachable_from": [
+                  "node_corner_4001"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_4003a",
+            "type": "init",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              6.3,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "node_corner_4003",
+                "reachable_from": [
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_corner_4003",
+            "type": "fixed",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              5.1,
+              -0.79
+            ],
+            "connections": [
+              {
+                "connects_to": "node_crossing_4002",
+                "reachable_from": [
+                  "node_corner_4002",
+                  "node_corner_4003a"
+                ],
+                "type": "normal",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          },
+          {
+            "id": "node_crossing_4002",
+            "type": "entry_and_exit",
+            "clear_distance": 0.3,
+            "pose": [
+              10.3,
+              3.9,
+              -1.57
+            ],
+            "connections": [
+              {
+                "connects_to": "/sorting_gate_4/node_4008",
+                "reachable_from": [
+                  "node_corner_4003"
+                ],
+                "type": "exit",
+                "blocking_neighbours": [],
+                "control_points": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "info": {
+      "version": "0.0.0",
+      "changelog": ""
+    }
+  }
