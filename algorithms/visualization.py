@@ -1,10 +1,10 @@
 from matplotlib.animation import FuncAnimation
 import numpy as np
-import random
 import itertools
 import networkx as nx
 import matplotlib.pyplot as plt
 import time
+
 
 # class for visualizing the results of the algorithms
 class Visualization:
@@ -54,11 +54,13 @@ class Visualization:
         # Initialize the reservation table for the current frame
         current_reservations = {}
         agents_paths = {}
+        agent_delay = {}
 
         # Initialize the reservation table
         def init():
             for agent in planners_paths:
                 agents_paths[agent] = list(itertools.chain(*planners_paths[agent]))
+                agent_delay[agent] = 0
             for line in lines.values():
                 line.set_data([], [])
             for trail in trails.values():
@@ -67,32 +69,48 @@ class Visualization:
             return list(lines.values())+list(trails.values())
 
         def update(frame):
-
+            # something to break at
             for agent, path in agents_paths.items():
                 if path and frame < len(path):
-                    node = path[frame]
+                    node = path[frame - agent_delay[agent]]
                     x, y = self.pos[node]
 
                     # Check if the node is reserved
-                    if frame > 0 and node in current_reservations:
+                    if frame > 0 and node in current_reservations and node != path[frame - agent_delay[agent] - 1]:
                         # If the node is reserved, wait for the other agent to move
                         # metrics['total_estop'] += 1
-                        prev_node = path[frame - 1]
+                        agent_delay[agent] += 1
+                        prev_node = path[frame - agent_delay[agent]]
                         x, y = self.pos[prev_node]
                     else:
-                        # Reserve the node
-                        current_reservations[node] = agent
+                        # Reserve the node using a stack of reservations
+                        if node not in current_reservations:
+                            current_reservations[node] = []
+                        elif node == path[frame - agent_delay[agent] - 1]:
+                            # restart the trail for the agent
+                            trails[agent].set_data([], [])
+                        current_reservations[node].append(agent)
+
                         if frame > 0:
-                            prev_node = path[frame - 1]
-                            if prev_node in current_reservations:
-                                del current_reservations[prev_node]
+                            prev_node = path[frame - agent_delay[agent] - 1]
+                            if prev_node in current_reservations and current_reservations[prev_node]:
+                                old_node_agent = current_reservations[prev_node].pop(0)
+                                if len(current_reservations[prev_node]) == 0:
+                                    del current_reservations[prev_node]
+                                if old_node_agent != agent:
+                                    print(f"Agent {agent} is waiting for Agent {old_node_agent} to move")
+
+                    # apply offset to the agent's trail
+                    offset = 0.025 * agent
+                    offset_x = x + offset
+                    offset_y = y + offset
 
                     # Update the path
                     lines[agent].set_data([x], [y])
                     # Update the trail
                     trail_x, trail_y = trails[agent].get_data()
-                    trail_x = np.append(trail_x, x)
-                    trail_y = np.append(trail_y, y)
+                    trail_x = np.append(trail_x, offset_x)
+                    trail_y = np.append(trail_y, offset_y)
                     trails[agent].set_data(trail_x, trail_y)
             return list(lines.values()) + list(trails.values())
 
@@ -102,11 +120,12 @@ class Visualization:
             for path in paths:
                 if len(path) > num_frames:
                     num_frames = len(path)
-        num_frames = num_frames * 2
+        num_frames = num_frames * 4
         self.metrics['total_time'] = num_frames
         anim = FuncAnimation(fig, update, frames=num_frames, init_func=init, blit=True, repeat=True, interval=1000)
 
         # save the animation as a gif
         anim.save('C:/Users/HP/Documents/0. Fall 24/senior design/test/testing_' + str(time.time()) +'.gif', writer='Pillow', fps=1)
+
         # plt.legend(loc='lower left')
         plt.show()

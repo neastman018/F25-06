@@ -21,7 +21,7 @@ def main():
     multi_graph = jtm.json_to_multi('algorithms/test_json/test4.json')
 
     # Define the graph from the json file
-    graph = single_graph
+    graph = multi_graph
 
     # Define the source and destination nodes
     graph_nodes = {}
@@ -46,7 +46,7 @@ def main():
             agents[i].append((src, dest)) # from input to bin
             agents[i].append((dest, src)) # from bin to input
 
-            print(f"Agent {i}: {src} -> {dest}")
+            # print(f"Agent {i}: {src} -> {dest}")
 
     # Genaric: agents = {1:[("node_1", "node_1005"), ("node_1005", "node_1")], 2:[("node_2", "node_2009"), ("node_2009", "node_2")], 3:[("node_3", "node_3015"), ("node_3015", "node_3")], 4:[("node_4","node_4011"), ("node_4011", "node_4")]}
 
