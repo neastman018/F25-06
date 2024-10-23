@@ -1,5 +1,6 @@
 import json_to_graph as jtg
 from math import sqrt
+import visualization as vis
 
 def euclidean_distance(coord1, coord2):
     return sqrt((coord1[0] - coord2[0]) ** 2 + (coord1[1] - coord2[1]) ** 2)
@@ -82,10 +83,12 @@ def json_to_multi(json_data):
     return graph
 
 if __name__ == "__main__":
-    graph = json_to_multi('algorithms/test_json/test4.json')
+    graph = json_to_multi('algorithms/test_json/test_complex.json')
 
     # Test the graph
     print(graph.get_neighbors("node_1001"))
     print(graph.get_vertex_type("node_1001"))
     print(graph.get_neighbors("node_1002"))
     print(graph.get_vertex_type("node_2"))
+    vis_obj = vis.Visualization()
+    vis_obj.draw_graph(graph)

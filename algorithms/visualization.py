@@ -33,7 +33,7 @@ class Visualization:
     def draw_graph(self, graph):
         self.nx_graph = self.convert_to_nx_graph(graph)
         self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
-        nx.draw(self.nx_graph, self.pos, with_labels=True)
+        nx.draw(self.nx_graph, self.pos, with_labels=False)
         plt.show()
 
     
@@ -131,4 +131,24 @@ class Visualization:
         # plt.legend(loc='lower left')
         plt.show()
 
+<<<<<<< Updated upstream
         return self.metrics
+=======
+    def show_path(self, path, graph):
+        self.nx_graph = self.convert_to_nx_graph(graph)
+        self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
+        
+        # Draw the graph
+        nx.draw(self.nx_graph, self.pos, with_labels=False, node_size=200, node_color='skyblue')
+        
+        # Extract the coordinates of the path
+        path_coords = [self.pos[node] for node in path]
+        path_x, path_y = zip(*path_coords)
+        
+        # Plot the path
+        plt.plot(path_x, path_y, marker='o', markersize=10, color='red', linestyle='-', linewidth=2, label='Path')
+        
+        plt.title("Path from Start to Goal")
+        plt.legend()
+        plt.show()
+>>>>>>> Stashed changes
