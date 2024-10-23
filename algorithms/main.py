@@ -16,23 +16,33 @@ def main():
     # TODO: implement time and space complexity analysis and find metrics for the algorithms
 
     # Define the graph from the interperter
-    single_graph = jtg.json_to_graph('algorithms/test_json/test4.json')
+    simple_graph = jtm.json_to_multi('algorithms/test_json/test_simple.json')
     #j_graph = jtm.json_to_graph('algorithms/test_json/test3.json')
-    multi_graph = jtm.json_to_multi('algorithms/test_json/test4.json')
+    multi_graph = jtm.json_to_multi('algorithms/test_json/test_complex.json')
 
     # Define the graph from the json file
     graph = multi_graph
 
     # Define the source and destination nodes
     graph_nodes = {}
-    for node in graph.vert_type:
-        if graph.vert_type[node] == 'input':
-            graph_nodes[node] = []
-        elif graph.vert_type[node] == 'bin':
-            for input in graph_nodes:
-                if node.startswith(input):
-                    graph_nodes[input].append(node)
-                    break
+    if graph == simple_graph:
+        for node in graph.vert_type:
+            if graph.vert_type[node] == 'input':
+                graph_nodes[node] = []
+            elif graph.vert_type[node] == 'bin':
+                for input in graph_nodes:
+                    if node.startswith(input):
+                        graph_nodes[input].append(node)
+                        break
+    else:
+        list_of_bins = []
+        for node, type in graph.vert_type.items():
+            if type == 'input':
+                graph_nodes[node] = []
+            elif type == 'bin':
+                list_of_bins.append(node)
+        for node in graph_nodes:
+            graph_nodes[node] = list_of_bins
 
             
 
@@ -58,7 +68,8 @@ def main():
     # Visualize the results of the search algorithm
     vis_obj = vis.Visualization()
     vis_obj.draw_graph(graph)
-    vis_obj.animate_paths(a_star_paths, graph)
+    metrics = vis_obj.animate_paths(a_star_paths, graph)
+    print(metrics)
    
 
 

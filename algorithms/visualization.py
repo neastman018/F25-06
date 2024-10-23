@@ -54,13 +54,13 @@ class Visualization:
         # Initialize the reservation table for the current frame
         current_reservations = {}
         agents_paths = {}
-        agent_delay = {}
+        agent_info = {}
 
         # Initialize the reservation table
         def init():
             for agent in planners_paths:
                 agents_paths[agent] = list(itertools.chain(*planners_paths[agent]))
-                agent_delay[agent] = 0
+                agent_info[agent] = {'delay': 0, 'offset': 0}
             for line in lines.values():
                 line.set_data([], [])
             for trail in trails.values():
@@ -72,27 +72,28 @@ class Visualization:
             # something to break at
             for agent, path in agents_paths.items():
                 if path and frame < len(path):
-                    node = path[frame - agent_delay[agent]]
+                    node = path[frame - agent_info[agent]['delay']]
                     x, y = self.pos[node]
 
                     # Check if the node is reserved
-                    if frame > 0 and node in current_reservations and node != path[frame - agent_delay[agent] - 1]:
+                    if frame > 0 and node in current_reservations and node != path[frame - agent_info[agent]['delay'] - 1]:
                         # If the node is reserved, wait for the other agent to move
-                        # metrics['total_estop'] += 1
-                        agent_delay[agent] += 1
-                        prev_node = path[frame - agent_delay[agent]]
+                        self.metrics['total_estops'] += 1
+                        agent_info[agent]['delay'] += 1
+                        prev_node = path[frame - agent_info[agent]['delay']]
                         x, y = self.pos[prev_node]
+                        agent_info[agent]['offset'] = 0.05
                     else:
                         # Reserve the node using a stack of reservations
                         if node not in current_reservations:
                             current_reservations[node] = []
-                        elif node == path[frame - agent_delay[agent] - 1]:
+                        elif node == path[frame - agent_info[agent]['delay'] - 1]:
                             # restart the trail for the agent
                             trails[agent].set_data([], [])
                         current_reservations[node].append(agent)
 
                         if frame > 0:
-                            prev_node = path[frame - agent_delay[agent] - 1]
+                            prev_node = path[frame - agent_info[agent]['delay'] - 1]
                             if prev_node in current_reservations and current_reservations[prev_node]:
                                 old_node_agent = current_reservations[prev_node].pop(0)
                                 if len(current_reservations[prev_node]) == 0:
@@ -101,7 +102,7 @@ class Visualization:
                                     print(f"Agent {agent} is waiting for Agent {old_node_agent} to move")
 
                     # apply offset to the agent's trail
-                    offset = 0.025 * agent
+                    offset = agent_info[agent]['offset']
                     offset_x = x + offset
                     offset_y = y + offset
 
@@ -129,3 +130,5 @@ class Visualization:
 
         # plt.legend(loc='lower left')
         plt.show()
+
+        return self.metrics

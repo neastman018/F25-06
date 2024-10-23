@@ -56,12 +56,12 @@ def json_to_multi(json_data):
             for connection in node["connections"]:
                 connect_to = connection["connects_to"]
                 if '/' in connect_to:
-                    xx, zone_id, connect_to = connect_to.split('/')
+                    _, zone_id, connect_to = connect_to.split('/')
                 distance = euclidean_distance(node_coords_map[node_id], node_coords_map[connect_to])
                 counter += 1
                 avg_distance = distance
     avg_distance /= counter
-
+    avg_distance = 2.75
     # Add connections to nodes if other nodes are within the max distance
     for node_id1, coords1 in node_coords_map.items():
         for node_id2, coords2 in node_coords_map.items():
