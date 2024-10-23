@@ -68,7 +68,7 @@ def json_to_multi(json_data):
         for node_id2, coords2 in node_coords_map.items():
             if node_id1 != node_id2:
                 distance = euclidean_distance(coords1, coords2)
-                if distance <= avg_distance:
+                if distance <= avg_distance and node_id1.get_vertex_count() < 4:
                     graph.add_edge(node_id1, node_id2, distance)
     #Calculate the maximum distance as the norm of all distances
     # max_distance = 0

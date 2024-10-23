@@ -2,6 +2,7 @@
 
 import a_star_w_reroute as a_star
 import d_star_w_reroute as d_star
+import a_star_multi as a_star_multi
 import json_to_graph as jtg
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -62,7 +63,7 @@ def main():
 
     # Run the search algorithm requested by the user
     d_star.d_star_search(graph, src, dest)
-    a_star_paths = a_star.run_a_star(graph, agents)
+    a_star_paths = a_star_multi.run_a_star_multi(graph, agents)
 
 
     # Visualize the results of the search algorithm

@@ -131,9 +131,8 @@ class Visualization:
         # plt.legend(loc='lower left')
         plt.show()
 
-<<<<<<< Updated upstream
         return self.metrics
-=======
+
     def show_path(self, path, graph):
         self.nx_graph = self.convert_to_nx_graph(graph)
         self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
@@ -151,4 +150,3 @@ class Visualization:
         plt.title("Path from Start to Goal")
         plt.legend()
         plt.show()
->>>>>>> Stashed changes
