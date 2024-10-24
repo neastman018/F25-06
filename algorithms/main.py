@@ -48,7 +48,7 @@ def main():
 
     # randomly selected bin nodes for 10 agents to go to from the input nodes
     agents = {}
-    for i in range(1, 11):
+    for i in range(1, 3):
         agents[i] = []
         src = random.choice(list(graph_nodes.keys()))
         for _ in range(1, 3):
@@ -56,7 +56,7 @@ def main():
             agents[i].append((src, dest)) # from input to bin
             agents[i].append((dest, src)) # from bin to input
 
-            # print(f"Agent {i}: {src} -> {dest}")
+            print(f"Agent {i}: {src} -> {dest}")
 
     # Genaric: agents = {1:[("node_1", "node_1005"), ("node_1005", "node_1")], 2:[("node_2", "node_2009"), ("node_2009", "node_2")], 3:[("node_3", "node_3015"), ("node_3015", "node_3")], 4:[("node_4","node_4011"), ("node_4011", "node_4")]}
 

@@ -33,7 +33,7 @@ class Visualization:
     def draw_graph(self, graph):
         self.nx_graph = self.convert_to_nx_graph(graph)
         self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
-        nx.draw(self.nx_graph, self.pos, with_labels=True)
+        nx.draw(self.nx_graph, self.pos, with_labels=False)
         plt.show()
 
     
@@ -43,7 +43,7 @@ class Visualization:
 
         # Plot the second figure for the animation
         fig, ax = plt.subplots()
-        nx.draw(self.nx_graph, nx.get_node_attributes(self.nx_graph, 'pos'), with_labels=False, node_size=200, node_color='skyblue')
+        nx.draw(self.nx_graph, nx.get_node_attributes(self.nx_graph, 'pos'), with_labels=False, node_size=75, node_color='skyblue')
         plt.title("Agent Paths Animation")
 
         # Initialize the animation
@@ -119,7 +119,7 @@ class Visualization:
         num_frames = 0
         for paths in planners_paths.values():
             for path in paths:
-                if len(path) > num_frames:
+                if path and len(path) > num_frames:
                     num_frames = len(path)
         num_frames = num_frames * 4
         self.metrics['total_time'] = num_frames
