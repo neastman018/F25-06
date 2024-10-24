@@ -14,8 +14,13 @@ def json_to_multi(json_data):
 
     for zone in data["zones"]:
         for node in zone["nodes"]:
-            node_id = node["id"]
-            node_coords = (node["pose"][0], node["pose"][1])
+            if '/' in node["id"]:
+                xx,zone_id, real = node["id"].split('/')
+                node_id = real
+                node_coords = (node["pose"][0], node["pose"][1])
+            else:
+                node_id = node["id"]
+                node_coords = (node["pose"][0], node["pose"][1])
             if(node["type"] != "target"):
                 node_type = "init"
             elif(node["type"] == "target"):
@@ -28,7 +33,11 @@ def json_to_multi(json_data):
 
     for zone in data["zones"]:
         for node in zone["nodes"]:
-            node_id = node["id"]
+            if '/' in node["id"]:
+                xx,zone_id, real = node["id"].split('/')
+                node_id = real
+            else:
+                node_id = node["id"]
             for connection in node["connections"]:
                 connect_to = connection["connects_to"]
                 if '/' in connect_to:
@@ -53,7 +62,11 @@ def json_to_multi(json_data):
     counter = 0
     for zone in data["zones"]:
         for node in zone["nodes"]:
-            node_id = node["id"]
+            if '/' in node["id"]:
+                xx,zone_id, real = node["id"].split('/')
+                node_id = real
+            else:
+                node_id = node["id"]
             for connection in node["connections"]:
                 connect_to = connection["connects_to"]
                 if '/' in connect_to:
@@ -68,7 +81,7 @@ def json_to_multi(json_data):
         for node_id2, coords2 in node_coords_map.items():
             if node_id1 != node_id2:
                 distance = euclidean_distance(coords1, coords2)
-                if distance <= avg_distance and node_id1.get_vertex_count() < 4:
+                if distance <= avg_distance and graph.get_edge_count(node_id1) < 4:
                     graph.add_edge(node_id1, node_id2, distance)
     #Calculate the maximum distance as the norm of all distances
     # max_distance = 0
