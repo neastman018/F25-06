@@ -132,3 +132,24 @@ class Visualization:
         plt.show()
 
         return self.metrics
+
+    def show_path(self, path, graph):
+        self.nx_graph = self.convert_to_nx_graph(graph)
+        self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
+        # Draw the graph
+        nx.draw(self.nx_graph, self.pos, with_labels=False, node_size=200, node_color='skyblue')
+        
+        # Extract the coordinates of the path
+        agents = list(path.keys())
+        agents_paths = {}
+        for agent in path:
+            agents_paths[agent] = list(itertools.chain(*path[agent]))
+        for agent, path in agents_paths.items():
+            path_coords = [self.pos[node] for node in path]
+            path_x, path_y = zip(*path_coords)
+            
+        plt.plot(path_x, path_y, marker='o', markersize=10, label=f"Agent {agent}")
+        
+        plt.title("Path from Start to Goal")
+        plt.legend()
+        plt.show()

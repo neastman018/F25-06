@@ -102,10 +102,10 @@ class SimpleGraph:
 simple_graph = SimpleGraph()
 
 # Define agents with their start and goal positions
-agents = [
-    ('A', 'D'),
-    ('B', 'C')
-]
+# agents = [
+#     ('A', 'D'),
+#     ('B', 'C')
+# ]
 
 # Run the A* algorithm for multiple agents
-run_a_star_multi(simple_graph, agents)
+# run_a_star_multi(simple_graph, agents)

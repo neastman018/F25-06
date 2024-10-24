@@ -2,6 +2,7 @@
 
 import a_star_w_reroute as a_star
 import d_star_w_reroute as d_star
+import a_star_multi as a_star_multi
 import json_to_graph as jtg
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -54,22 +55,22 @@ def main():
         for _ in range(1, 3):
             dest = graph_nodes[src][random.randint(0, len(graph_nodes[src]) - 1)]
             agents[i].append((src, dest)) # from input to bin
-            agents[i].append((dest, src)) # from bin to input
+            #agents[i].append((dest, src)) # from bin to input
 
             print(f"Agent {i}: {src} -> {dest}")
 
     # Genaric: agents = {1:[("node_1", "node_1005"), ("node_1005", "node_1")], 2:[("node_2", "node_2009"), ("node_2009", "node_2")], 3:[("node_3", "node_3015"), ("node_3015", "node_3")], 4:[("node_4","node_4011"), ("node_4011", "node_4")]}
 
     # Run the search algorithm requested by the user
-    d_star.d_star_search(graph, src, dest)
+    #d_star.d_star_search(graph, src, dest)
     a_star_paths = a_star.run_a_star(graph, agents)
 
 
     # Visualize the results of the search algorithm
     vis_obj = vis.Visualization()
-    vis_obj.draw_graph(graph)
-    metrics = vis_obj.animate_paths(a_star_paths, graph)
-    print(metrics)
+    #vis_obj.draw_graph(graph)
+    metrics = vis_obj.show_path(a_star_paths, graph)
+    #print(metrics)
    
 
 

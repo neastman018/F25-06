@@ -1,5 +1,6 @@
 import json_to_graph as jtg
 from math import sqrt
+import visualization as vis
 
 def euclidean_distance(coord1, coord2):
     return sqrt((coord1[0] - coord2[0]) ** 2 + (coord1[1] - coord2[1]) ** 2)
@@ -13,8 +14,13 @@ def json_to_multi(json_data):
 
     for zone in data["zones"]:
         for node in zone["nodes"]:
-            node_id = node["id"]
-            node_coords = (node["pose"][0], node["pose"][1])
+            if '/' in node["id"]:
+                xx,zone_id, real = node["id"].split('/')
+                node_id = real
+                node_coords = (node["pose"][0], node["pose"][1])
+            else:
+                node_id = node["id"]
+                node_coords = (node["pose"][0], node["pose"][1])
             if(node["type"] != "target"):
                 node_type = "init"
             elif(node["type"] == "target"):
@@ -27,7 +33,11 @@ def json_to_multi(json_data):
 
     for zone in data["zones"]:
         for node in zone["nodes"]:
-            node_id = node["id"]
+            if '/' in node["id"]:
+                xx,zone_id, real = node["id"].split('/')
+                node_id = real
+            else:
+                node_id = node["id"]
             for connection in node["connections"]:
                 connect_to = connection["connects_to"]
                 if '/' in connect_to:
@@ -52,7 +62,11 @@ def json_to_multi(json_data):
     counter = 0
     for zone in data["zones"]:
         for node in zone["nodes"]:
-            node_id = node["id"]
+            if '/' in node["id"]:
+                xx,zone_id, real = node["id"].split('/')
+                node_id = real
+            else:
+                node_id = node["id"]
             for connection in node["connections"]:
                 connect_to = connection["connects_to"]
                 if '/' in connect_to:
@@ -67,7 +81,7 @@ def json_to_multi(json_data):
         for node_id2, coords2 in node_coords_map.items():
             if node_id1 != node_id2:
                 distance = euclidean_distance(coords1, coords2)
-                if distance <= avg_distance:
+                if distance <= avg_distance and graph.get_edge_count(node_id1) < 4:
                     graph.add_edge(node_id1, node_id2, distance)
     #Calculate the maximum distance as the norm of all distances
     # max_distance = 0
@@ -82,10 +96,12 @@ def json_to_multi(json_data):
     return graph
 
 if __name__ == "__main__":
-    graph = json_to_multi('algorithms/test_json/test4.json')
+    graph = json_to_multi('algorithms/test_json/test_complex.json')
 
     # Test the graph
     print(graph.get_neighbors("node_1001"))
     print(graph.get_vertex_type("node_1001"))
     print(graph.get_neighbors("node_1002"))
     print(graph.get_vertex_type("node_2"))
+    vis_obj = vis.Visualization()
+    vis_obj.draw_graph(graph)
