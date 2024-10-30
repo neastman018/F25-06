@@ -32,6 +32,9 @@ class Graph:
             return len(self.vertices[vertex])
         else:
             return 0
+        
+    def get_vertices_count(self):
+        return len(self.vertices)
 
 def json_to_graph(json_data):
     graph = Graph()
