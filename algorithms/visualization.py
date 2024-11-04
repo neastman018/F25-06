@@ -40,6 +40,8 @@ class Visualization:
     
     def animate_paths(self, planners_paths, graph):
         agents = list(planners_paths.keys())
+        self.nx_graph = self.convert_to_nx_graph(graph)
+        self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
 
         # Plot the second figure for the animation
         fig, ax = plt.subplots()
@@ -126,29 +128,30 @@ class Visualization:
         anim = FuncAnimation(fig, update, frames=num_frames, init_func=init, blit=True, repeat=True, interval=1000)
 
         # save the animation as a gif
-        anim.save('C:/Users/HP/Documents/0. Fall 24/senior design/test/testing_' + str(time.time()) +'.gif', writer='Pillow', fps=1)
+        #anim.save('C:/Users/HP/Documents/0. Fall 24/senior design/test/testing_' + str(time.time()) +'.gif', writer='Pillow', fps=1)
 
         # plt.legend(loc='lower left')
         plt.show()
 
         return self.metrics
 
-    def show_path(self, path, graph):
+    def show_path(self, paths, graph):
         self.nx_graph = self.convert_to_nx_graph(graph)
         self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
-        # Draw the graph
-        nx.draw(self.nx_graph, self.pos, with_labels=False, node_size=200, node_color='skyblue')
         
-        # Extract the coordinates of the path
-        agents = list(path.keys())
+        # Draw the graph with edges
+        nx.draw(self.nx_graph, self.pos, with_labels=False, node_size=200, node_color='skyblue', edge_color='gray')
+        
         agents_paths = {}
-        for agent in path:
-            agents_paths[agent] = list(itertools.chain(*path[agent]))
+        for agent in paths:
+            agents_paths[agent] = list(itertools.chain(*paths[agent]))
+        
         for agent, path in agents_paths.items():
+            if path[0] == path[-1]:
+                path = path[:-1]
             path_coords = [self.pos[node] for node in path]
             path_x, path_y = zip(*path_coords)
-            
-        plt.plot(path_x, path_y, marker='o', markersize=10, label=f"Agent {agent}")
+            plt.plot(path_x, path_y, marker='o', markersize=10, label=f"Agent {agent}")
         
         plt.title("Path from Start to Goal")
         plt.legend()
