@@ -12,16 +12,73 @@ class Visualization:
     graph = None
     # create metrics for the algorithms
     metrics = {}
-    metrics['total_time'] = 0
-    metrics['total_nodes'] = 0
+    metrics['agent_distance'] = {}
     metrics['total_estops'] = 0
     metrics['total_replan'] = 0
-    metrics['total_agents'] = 0
     metrics['total_dropoffs'] = 0
 
     def __init__(self) -> None:
         pass
     
+    def update_metrics(self, paths, graph):
+        
+        self.nx_graph = self.convert_to_nx_graph(graph)
+        self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
+        # todo: implement time and space complexity analysis and find metrics for the algorithms
+        
+        agents_paths = {}
+        agent_info = {}
+        frame = 0
+        current_reservations = {}
+
+        for agent in paths:
+                agents_paths[agent] = list(itertools.chain(*paths[agent]))
+                agent_info[agent] = 0
+                self.metrics['agent_distance'][agent] = 0
+        
+        max_len = max([len(path) for path in agents_paths.values()])
+
+        for frame in range(0, max_len-1):   
+            for agent, path in agents_paths.items():
+                if path and frame < len(path):
+                    node = path[frame - agent_info[agent]]
+                    x, y = self.pos[node]
+
+                    if frame > 0 and node == path[frame - agent_info[agent] - 1]:
+                        self.metrics['total_dropoffs'] += 1
+
+                    # Check if the node is reserved
+                    if frame > 0 and node in current_reservations and node != path[frame - agent_info[agent] - 1]:
+                        # If the node is reserved, wait for the other agent to move
+                        agent_info[agent] += 1
+                        prev_node = path[frame - agent_info[agent]]
+                        x, y = self.pos[prev_node]
+                    else:
+                        # Reserve the node using a stack of reservations
+                        if node not in current_reservations:
+                            current_reservations[node] = []
+
+                        current_reservations[node].append(agent)
+
+                        if frame > 0:
+                            prev_node = path[frame - agent_info[agent] - 1]
+                            if prev_node in current_reservations and current_reservations[prev_node]:
+                                old_node_agent = current_reservations[prev_node].pop(0)
+                                if len(current_reservations[prev_node]) == 0:
+                                    del current_reservations[prev_node]
+                                if old_node_agent != agent:
+                                    print(f"Agent {agent} is waiting for Agent {old_node_agent} to move")
+                                    self.metrics['total_estops'] += 1
+
+                    # Update the agent's distance
+                    prev_node = path[frame - agent_info[agent]-1]
+                    self.metrics['agent_distance'][agent] += np.sqrt((x - self.pos[prev_node][0])**2 + (y - self.pos[prev_node][1])**2)
+
+            
+                
+        return self.metrics
+
+
     def convert_to_nx_graph(self, graph):
         nx_graph = nx.Graph()
         for vertex in graph.vertices:
@@ -39,13 +96,16 @@ class Visualization:
     
     
     def animate_paths(self, planners_paths, graph):
+        self.nx_graph = self.convert_to_nx_graph(graph)
+        self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
+        
         agents = list(planners_paths.keys())
         self.nx_graph = self.convert_to_nx_graph(graph)
         self.pos = nx.get_node_attributes(self.nx_graph, 'pos')
 
         # Plot the second figure for the animation
         fig, ax = plt.subplots()
-        nx.draw(self.nx_graph, nx.get_node_attributes(self.nx_graph, 'pos'), with_labels=False, node_size=200, node_color='skyblue')
+        nx.draw(self.nx_graph, nx.get_node_attributes(self.nx_graph, 'pos'), with_labels=False, node_size=75, node_color='skyblue')
         plt.title("Agent Paths Animation")
 
         # Initialize the animation
@@ -63,6 +123,7 @@ class Visualization:
             for agent in planners_paths:
                 agents_paths[agent] = list(itertools.chain(*planners_paths[agent]))
                 agent_info[agent] = {'delay': 0, 'offset': 0}
+                
             for line in lines.values():
                 line.set_data([], [])
             for trail in trails.values():
@@ -80,7 +141,6 @@ class Visualization:
                     # Check if the node is reserved
                     if frame > 0 and node in current_reservations and node != path[frame - agent_info[agent]['delay'] - 1]:
                         # If the node is reserved, wait for the other agent to move
-                        self.metrics['total_estops'] += 1
                         agent_info[agent]['delay'] += 1
                         prev_node = path[frame - agent_info[agent]['delay']]
                         x, y = self.pos[prev_node]
@@ -92,6 +152,7 @@ class Visualization:
                         elif node == path[frame - agent_info[agent]['delay'] - 1]:
                             # restart the trail for the agent
                             trails[agent].set_data([], [])
+
                         current_reservations[node].append(agent)
 
                         if frame > 0:
@@ -103,6 +164,9 @@ class Visualization:
                                 if old_node_agent != agent:
                                     print(f"Agent {agent} is waiting for Agent {old_node_agent} to move")
 
+                    # Update the agent's distance
+                    prev_node = path[frame - agent_info[agent]['delay']-1]
+                    
                     # apply offset to the agent's trail
                     offset = agent_info[agent]['offset']
                     offset_x = x + offset
@@ -121,7 +185,7 @@ class Visualization:
         num_frames = 0
         for paths in planners_paths.values():
             for path in paths:
-                if len(path) > num_frames:
+                if path and len(path) > num_frames:
                     num_frames = len(path)
         num_frames = num_frames * 4
         self.metrics['total_time'] = num_frames
@@ -142,6 +206,7 @@ class Visualization:
         # Draw the graph with edges
         nx.draw(self.nx_graph, self.pos, with_labels=False, node_size=200, node_color='skyblue', edge_color='gray')
         
+        # Extract the coordinates of the path
         agents_paths = {}
         for agent in paths:
             agents_paths[agent] = list(itertools.chain(*paths[agent]))

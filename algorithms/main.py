@@ -11,9 +11,11 @@ from matplotlib.animation import FuncAnimation
 import numpy as np
 import random
 import visualization as vis
+import json
+import time
 
 
-def main():
+def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algorithm="A*", floor_plan="Complex"):
     # TODO: implement time and space complexity analysis and find metrics for the algorithms
 
     # Define the graph from the interperter
@@ -22,7 +24,7 @@ def main():
     multi_graph = jtm.json_to_multi('algorithms/test_json/test_complex.json')
 
     # Define the graph from the json file
-    graph = multi_graph
+    graph = simple_graph if floor_plan == "Simple" else multi_graph
 
     # Define the source and destination nodes
     graph_nodes = {}
@@ -49,30 +51,60 @@ def main():
 
     # randomly selected bin nodes for 10 agents to go to from the input nodes
     agents = {}
-    for i in range(1, 3):
+    for i in range(1, num_agents + 1):
         agents[i] = []
         src = random.choice(list(graph_nodes.keys()))
-        for _ in range(1, 3):
+        for _ in range(1, num_packages + 1):
             dest = graph_nodes[src][random.randint(0, len(graph_nodes[src]) - 1)]
             agents[i].append((src, dest)) # from input to bin
-            #agents[i].append((dest, src)) # from bin to input
+            agents[i].append((dest, src)) # from bin to input
 
-            # print(f"Agent {i}: {src} -> {dest}")
+            print(f"Agent {i}: {src} -> {dest}")
 
     # Genaric: agents = {1:[("node_1", "node_1005"), ("node_1005", "node_1")], 2:[("node_2", "node_2009"), ("node_2009", "node_2")], 3:[("node_3", "node_3015"), ("node_3015", "node_3")], 4:[("node_4","node_4011"), ("node_4011", "node_4")]}
 
     # Run the search algorithm requested by the user
-    #d_star.d_star_search(graph, src, dest)
-    a_star_paths = a_star.run_a_star(graph, agents)
+    planner_paths = a_star.run_a_star(graph, agents) if algorithm == "A*" else d_star.run_d_star(graph, agents)
 
 
     # Visualize the results of the search algorithm
     vis_obj = vis.Visualization()
-    #vis_obj.draw_graph(graph)
-    metrics = vis_obj.show_path(a_star_paths, graph)
-    #print(metrics)
+    vis_obj.animate_paths(planner_paths, graph)
+    #vis_obj.show_path(planner_paths, graph)
+    metrics = vis_obj.update_metrics(planner_paths, graph)
+    
+    # exract the metrics from the visualization object
+    max_dist = max(metrics['agent_distance'].values())
+    speed = 1 # m/s
+    delay = metrics['total_estops'] + metrics['total_dropoffs'] # seconds
+    metrics['time'] = (max_dist / speed) + delay
+    print(f"Time: {metrics['time']} seconds")
+    print(f"Agents: {len(agents)}")
+    print(f"Total distance: {sum(metrics['agent_distance'].values())}")
+    print(f"Total dropoffs: {metrics['total_dropoffs']}")
+
+    full_metrics = {
+        "Simulation Name": "2_Test Simulation", 
+        "Simulation Conducted": test_plan, 
+        "Algorithm": algorithm,
+        "Floor Plan": floor_plan, 
+        "Number of Robots": num_agents, 
+        "Number of Nodes": graph.get_vertices_count(), 
+        "simulation results": {
+            "Time": metrics['time'], 
+            "Total Distance": sum(metrics['agent_distance'].values()), 
+            "Total Dropoffs": metrics['total_dropoffs'],
+            "Total Planned Drops": num_agents * num_packages
+        }
+    }
+
+    # write a json file with the metrics
+    json_metrics = json.dumps(full_metrics, indent=4)
+
+    with open("metrics_" + str(time.time()) + ".json", 'w') as outfile:
+        outfile.write(json_metrics)
    
 
 
 if __name__ == "__main__":
-    main()
+    test_validation()
