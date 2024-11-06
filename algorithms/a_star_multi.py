@@ -24,21 +24,28 @@ def new_a_star(json_graph, start, goal, heuristic, blocked_nodes, time_step):
     
     f_score = {node: float('inf') for node in graph}
     f_score[start] = heuristic(json_graph.get_coords(start), json_graph.get_coords(goal))
-    
+    visited = set()
+
     while open_set:
         current = heapq.heappop(open_set)[1]
-        
         if current == goal:
             return reconstruct_path(came_from, current)
         
+        if current in blocked_nodes or current in visited:
+            #print(f"Node {current} is blocked, skipping.")
+            continue
+
+        visited.add(current)
+
         for neighbor, cost in graph[current].items():
             # Check if the neighbor is blocked at the current time step
-            if neighbor in blocked_nodes and time_step in blocked_nodes[neighbor]:
+            if neighbor in blocked_nodes or neighbor in visited:
+                #print("blocked node")
                 continue
             
             tentative_g_score = g_score[current] + cost
             
-            if tentative_g_score < g_score[neighbor]:
+            if tentative_g_score < g_score.get(neighbor, float('inf')):
                 came_from[neighbor] = current
                 g_score[neighbor] = tentative_g_score
                 f_score[neighbor] = g_score[neighbor] + heuristic(json_graph.get_coords(neighbor), json_graph.get_coords(goal))
@@ -68,43 +75,59 @@ def run_a_star_multi(json_graph, agents):
     while agents:
         new_agents = {}
         for agent,routes in agents.items():
-            paths[agent] = []
+            if agent not in paths:
+                paths[agent] = []
             for route in routes:
                 src, dest = route
                 path = new_a_star(json_graph, src, dest, heuristic, blocked_nodes, time_step)
                 if path:
                     if not check_conflict(paths, path, time_step, blocked_nodes):
                         paths[agent].append(path)
-                        #print(f"Agent: ({src}, {dest}): Path found: {path}")
                     else:
-                        print("------------------------------")
                         new_agents[agent] = []
-                        new_agents[agent].append((route[0],route[1]))
+                        new_agents[agent].append((src,dest))
                 else:
                     new_agents[agent] = []
-                    new_agents[agent].append((route[0],route[1]))
+                    new_agents[agent].append((src,dest))
             time_step += 1
 
-        for node in list(blocked_nodes.keys()):
-            blocked_nodes[node] = [t for t in blocked_nodes[node] if t > time_step]
-            if not blocked_nodes[node]:
-                del blocked_nodes[node]
+        # for node in list(blocked_nodes.keys()):
+        #     blocked_nodes[node] = [t for t in blocked_nodes[node] if t > time_step]
+        #     if not blocked_nodes[node]:
+        #         del blocked_nodes[node]
         agents = new_agents
     return paths
 
 def check_conflict(paths, new_path, time_step, blocked_nodes):
     for agent_num,path in paths.items():
-        length = min(len(path)-time_step+agent_num-1, len(new_path))
+        bottom_path = []
+        if(path != []):
+            bottom_path = path[-1]
+            length = min(len(path[-1])-time_step+agent_num-1, len(new_path))
+        else:
+            length = len(new_path)
         for i in range(length):
-            if path[i+time_step-agent_num+1] == new_path[i]:
+            if bottom_path != [] and bottom_path[i+time_step-agent_num+1] == new_path[i]:
                 if new_path[i] not in blocked_nodes:
                     blocked_nodes[new_path[i]] = []
                     blocked_nodes[new_path[i]].append(time_step + 2)
                 return True
             # Check for edge conflicts (swapping places)
-            # if time_step > 0 and path[time_step - 1] == new_path[time_step] and path[time_step] == new_path[time_step - 1]:
-            #     print(f"Edge conflict found at time step {time_step} for path {new_path}")
-            #     return True
+            if bottom_path != [] and i>0 and bottom_path[i+time_step-agent_num] == new_path[i] and bottom_path[i+time_step-agent_num+1] == new_path[i-1]:
+                print("edge conflict")
+                if new_path[i] not in blocked_nodes:
+                    blocked_nodes[bottom_path[i+time_step-agent_num]] = []
+                    blocked_nodes[bottom_path[i+time_step-agent_num]].append(time_step + 2)
+                if new_path[i - 1] not in blocked_nodes:
+                    blocked_nodes[bottom_path[i+time_step-agent_num+1]] = []
+                    blocked_nodes[bottom_path[i+time_step-agent_num+1]].append(time_step + 2)
+                return True
+            if bottom_path and bottom_path[i + time_step - agent_num + 1] == new_path[i]:
+                print("headon conflict")
+                if new_path[i] not in blocked_nodes:
+                    blocked_nodes[new_path[i]] = []
+                    blocked_nodes[new_path[i]].append(time_step + 2)
+                return True
     return False
 
 class SimpleGraph:
