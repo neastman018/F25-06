@@ -4,6 +4,7 @@ import itertools
 import networkx as nx
 import matplotlib.pyplot as plt
 import time
+import copy
 
 
 # class for visualizing the results of the algorithms
@@ -35,12 +36,14 @@ class Visualization:
                 agents_paths[agent] = list(itertools.chain(*paths[agent]))
                 agent_info[agent] = 0
                 self.metrics['agent_distance'][agent] = 0
-        
-        max_len = max([len(path) for path in agents_paths.values()])
 
-        for frame in range(0, max_len-1):   
+        frame = 0
+        done = False
+        prev_reservations = {}
+
+        while not done:  
             for agent, path in agents_paths.items():
-                if path and frame < len(path):
+                if path and (frame - agent_info[agent]) < len(path):
                     node = path[frame - agent_info[agent]]
                     x, y = self.pos[node]
 
@@ -49,10 +52,21 @@ class Visualization:
 
                     # Check if the node is reserved
                     if frame > 0 and node in current_reservations and node != path[frame - agent_info[agent] - 1]:
-                        # If the node is reserved, wait for the other agent to move
-                        agent_info[agent] += 1
-                        prev_node = path[frame - agent_info[agent]]
-                        x, y = self.pos[prev_node]
+                        # check if the reservation is try to switch
+                        conflict_agent = current_reservations[node][0]
+                        if agents_paths[conflict_agent][frame - agent_info[conflict_agent] + 1] == path[frame - agent_info[agent] - 1]:
+                            # allow for the agents to switch
+                            current_reservations[node].pop(0)
+                            current_reservations[path[frame - agent_info[agent] - 1]].pop(0)
+                            current_reservations[node].insert(0, agent)
+                            if len(current_reservations[path[frame - agent_info[agent] - 1]]) == 0:
+                                del current_reservations[path[frame - agent_info[agent] - 1]]
+                            
+                        else:
+                            # If the node is reserved, wait for the other agent to move
+                            agent_info[agent] += 1
+                            prev_node = path[frame - agent_info[agent]]
+                            x, y = self.pos[prev_node]
                     else:
                         # Reserve the node using a stack of reservations
                         if node not in current_reservations:
@@ -67,13 +81,31 @@ class Visualization:
                                 if len(current_reservations[prev_node]) == 0:
                                     del current_reservations[prev_node]
                                 if old_node_agent != agent:
-                                    print(f"Agent {agent} is waiting for Agent {old_node_agent} to move")
+                                    # print(f"Agent {agent} is waiting for Agent {old_node_agent} to move")
                                     self.metrics['total_estops'] += 1
 
                     # Update the agent's distance
                     prev_node = path[frame - agent_info[agent]-1]
                     self.metrics['agent_distance'][agent] += np.sqrt((x - self.pos[prev_node][0])**2 + (y - self.pos[prev_node][1])**2)
+                else:
+                    if path[len(path)-1] in current_reservations:
+                        del current_reservations[path[len(path)-1]]
 
+            
+            done = True
+            for agent in agents_paths:
+                # check that all agents have reached their destination
+                if (frame - agent_info[agent] - 1) < len(agents_paths[agent]):
+                    done = False
+                    break
+
+            if frame > 0 and prev_reservations == current_reservations:
+                    done = True
+                    break   
+
+            prev_reservations = copy.deepcopy(current_reservations)
+            frame += 1
+        
             
                 
         return self.metrics
@@ -132,7 +164,7 @@ class Visualization:
         def update(frame):
             # something to break at
             for agent, path in agents_paths.items():
-                if path and frame < len(path):
+                if path and (frame - agent_info[agent]['delay']) < len(path):
                     node = path[frame - agent_info[agent]['delay']]
                     x, y = self.pos[node]
 

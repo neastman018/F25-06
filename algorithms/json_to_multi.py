@@ -75,7 +75,7 @@ def json_to_multi(json_data):
                 counter += 1
                 avg_distance = distance
     avg_distance /= counter
-    avg_distance = 2.75
+    avg_distance = 1.75
     # Add connections to nodes if other nodes are within the max distance
     for node_id1, coords1 in node_coords_map.items():
         for node_id2, coords2 in node_coords_map.items():

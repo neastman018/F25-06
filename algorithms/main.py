@@ -16,10 +16,9 @@ import time
 
 
 def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algorithm="A*", floor_plan="Complex"):
-    # TODO: implement time and space complexity analysis and find metrics for the algorithms
 
     # Define the graph from the interperter
-    simple_graph = jtm.json_to_multi('algorithms/test_json/test_simple.json')
+    simple_graph = jtg.json_to_graph('algorithms/test_json/test_simple.json')
     #j_graph = jtm.json_to_graph('algorithms/test_json/test3.json')
     multi_graph = jtm.json_to_multi('algorithms/test_json/test_complex.json')
 
@@ -59,9 +58,10 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
             agents[i].append((src, dest)) # from input to bin
             agents[i].append((dest, src)) # from bin to input
 
-            print(f"Agent {i}: {src} -> {dest}")
+            # print(f"Agent {i}: {src} -> {dest}")
 
     # Genaric: agents = {1:[("node_1", "node_1005"), ("node_1005", "node_1")], 2:[("node_2", "node_2009"), ("node_2009", "node_2")], 3:[("node_3", "node_3015"), ("node_3015", "node_3")], 4:[("node_4","node_4011"), ("node_4011", "node_4")]}
+    # agents[1] = [("qwer", "node_x001"), ("node_x001", "qwer"), ("qwer", "node_x002"), ("node_x002", "qwer")]
 
     # Run the search algorithm requested by the user
     planner_paths = a_star.run_a_star(graph, agents) if algorithm == "A*" else d_star.run_d_star(graph, agents)
@@ -71,6 +71,7 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
     vis_obj = vis.Visualization()
     vis_obj.animate_paths(planner_paths, graph)
     #vis_obj.show_path(planner_paths, graph)
+    metrics = None
     metrics = vis_obj.update_metrics(planner_paths, graph)
     
     # exract the metrics from the visualization object
@@ -78,9 +79,9 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
     speed = 1 # m/s
     delay = metrics['total_estops'] + metrics['total_dropoffs'] # seconds
     metrics['time'] = (max_dist / speed) + delay
-    print(f"Time: {metrics['time']} seconds")
-    print(f"Agents: {len(agents)}")
-    print(f"Total distance: {sum(metrics['agent_distance'].values())}")
+    # print(f"Time: {metrics['time']} seconds")
+    # print(f"Agents: {len(agents)}")
+    # print(f"Total distance: {sum(metrics['agent_distance'].values())}")
     print(f"Total dropoffs: {metrics['total_dropoffs']}")
 
     full_metrics = {
@@ -94,17 +95,22 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
             "Time": metrics['time'], 
             "Total Distance": sum(metrics['agent_distance'].values()), 
             "Total Dropoffs": metrics['total_dropoffs'],
-            "Total Planned Drops": num_agents * num_packages
+            "Total Planned Drops": num_agents * (num_packages + 1)
         }
     }
 
     # write a json file with the metrics
     json_metrics = json.dumps(full_metrics, indent=4)
-
-    with open("metrics_" + str(time.time()) + ".json", 'w') as outfile:
-        outfile.write(json_metrics)
+    
+    if full_metrics['simulation results']['Total Dropoffs'] == full_metrics['simulation results']['Total Planned Drops']:
+        with open("c" + "metrics_D_" + str(time.time()) + ".json", 'w') as outfile:
+            outfile.write(json_metrics)
+        print("Simulation Passed")
+    else:
+        with open("metrics_" + str(time.time()) + ".json", 'w') as outfile:
+            outfile.write(json_metrics)
    
 
 
 if __name__ == "__main__":
-    test_validation()
+    test_validation(algorithm="D*")

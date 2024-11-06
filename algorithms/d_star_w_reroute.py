@@ -1,9 +1,12 @@
 import heapq
+import numpy as np
 
 def calculate_heuristic(start, goal):
     (x1, y1) = start
     (x2, y2) = goal
-    return abs(x1 - x2) + abs(y1 - y2)
+    x_val = (x1-x2)**2
+    y_val = (y1-y2)**2
+    return np.sqrt(x_val + y_val)
 
 def d_star(json_graph, start, goal, reservation_table):
     graph = json_graph.vertices
@@ -27,17 +30,28 @@ def d_star(json_graph, start, goal, reservation_table):
                     heapq.heappush(open_list, (tentative_g_score + calculate_heuristic(json_graph.get_coords(neighbor), json_graph.get_coords(goal)), neighbor, neighbor_time))
                     predecessors[(neighbor, neighbor_time)] = (current, current_time)
 
+                    # Prune the open list if it becomes too large
+                    if len(open_list) > 1000:  # Example threshold
+                        open_list = prune_open_list(open_list)
+
     return None
+
+def prune_open_list(open_list):
+    # Example pruning mechanism: remove nodes with high cost
+    threshold = 100  # Example threshold
+    return [item for item in open_list if item[0] < threshold]
 
 def is_occupied(node, time, reservation_table):
     return node in reservation_table and time in reservation_table[node]
 
 def reconstruct_path(predecessors, current, current_time):
-    total_path = [(current, current_time)]
+    total_path = {'path':[current], 'time': [current_time]}
     while (current, current_time) in predecessors:
         current, current_time = predecessors[(current, current_time)]
-        total_path.append((current, current_time))
-    total_path.reverse()
+        total_path['path'].append(current)
+        total_path['time'].append(current_time)
+    total_path['path'].reverse()
+    total_path['time'].reverse()
     return total_path
 
 def d_star_search(json_graph, src, dest):
@@ -45,21 +59,16 @@ def d_star_search(json_graph, src, dest):
     print("Path: (", src + ", " + dest + "):")
     print("Path found:", path)
 
-
-def multi_agent_path_planning(graph, agents):
-    reservation_table = {}
+def run_d_star(json_graph, agents):
     paths = {}
-    for agent in agents:
-        start, goal = agent
-        path = d_star(graph, start, goal, reservation_table)
-        if path:
-            paths[agent] = path
-            for node, time in path:
-                if node not in reservation_table:
-                    reservation_table[node] = set()
-                reservation_table[node].add(time)
-        else:
-            paths[agent] = None
+    for agent, routes in agents.items():
+        paths[agent] = []
+        for route in routes:
+            src, dest = route
+            path = d_star(json_graph, src, dest, {})
+            paths[agent].append(path['path'])
+            # print("Agent: " + str(agent) + ": Path found:", path)
+
     return paths
 
 # # Example usage
