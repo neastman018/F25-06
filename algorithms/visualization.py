@@ -44,7 +44,7 @@ class Visualization:
         while not done:  
             for agent, path in agents_paths.items():
                 if path and (frame - agent_info[agent]) < len(path):
-                    node = path[frame - agent_info[agent]]
+                    node = path[frame - agent_info[agent]] # next node
                     x, y = self.pos[node]
 
                     if frame > 0 and node == path[frame - agent_info[agent] - 1]:
@@ -54,14 +54,15 @@ class Visualization:
                     if frame > 0 and node in current_reservations and node != path[frame - agent_info[agent] - 1]:
                         # check if the reservation is try to switch
                         conflict_agent = current_reservations[node][0]
-                        if agents_paths[conflict_agent][frame - agent_info[conflict_agent] + 1] == path[frame - agent_info[agent] - 1]:
+                        if len(agents_paths[conflict_agent]) > (frame - agent_info[conflict_agent] + 1) and agents_paths[conflict_agent][frame - agent_info[conflict_agent] + 1] == path[frame - agent_info[agent] - 1]:
                             # allow for the agents to switch
                             current_reservations[node].pop(0)
-                            current_reservations[path[frame - agent_info[agent] - 1]].pop(0)
                             current_reservations[node].insert(0, agent)
-                            if len(current_reservations[path[frame - agent_info[agent] - 1]]) == 0:
-                                del current_reservations[path[frame - agent_info[agent] - 1]]
-                            
+                            if path[frame - agent_info[agent] - 1] in current_reservations:
+                                current_reservations[path[frame - agent_info[agent] - 1]].pop(0)
+                                if len(current_reservations[path[frame - agent_info[agent] - 1]]) == 0:
+                                    del current_reservations[path[frame - agent_info[agent] - 1]]
+                                
                         else:
                             # If the node is reserved, wait for the other agent to move
                             agent_info[agent] += 1
@@ -211,6 +212,13 @@ class Visualization:
                     trail_x = np.append(trail_x, offset_x)
                     trail_y = np.append(trail_y, offset_y)
                     trails[agent].set_data(trail_x, trail_y)
+                else:
+                    # remove the last node from the reservation table and the trail
+                    if path[len(path)-1] in current_reservations:
+                        del current_reservations[path[len(path)-1]]
+                    trails[agent].set_data([], [])
+                    lines[agent].set_data([], [])
+
             return list(lines.values()) + list(trails.values())
 
         # Animate the paths
@@ -224,7 +232,7 @@ class Visualization:
         anim = FuncAnimation(fig, update, frames=num_frames, init_func=init, blit=True, repeat=True, interval=1000)
 
         # save the animation as a gif
-        #anim.save('C:/Users/HP/Documents/0. Fall 24/senior design/test/testing_' + str(time.time()) +'.gif', writer='Pillow', fps=1)
+        anim.save('C:/Users/HP/Documents/0. Fall 24/senior design/test/testing_' + str(time.time()) +'.gif', writer='Pillow', fps=1)
 
         # plt.legend(loc='lower left')
         plt.show()
@@ -253,3 +261,6 @@ class Visualization:
         plt.title("Path from Start to Goal")
         plt.legend()
         plt.show()
+
+        # save the plot as an image
+        plt.savefig('C:/Users/HP/Documents/0. Fall 24/senior design/test/imaging_' + str(time.time()) +'.png')

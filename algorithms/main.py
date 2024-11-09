@@ -65,12 +65,12 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
 
     # Run the search algorithm requested by the user
     planner_paths = a_star.run_a_star(graph, agents) if algorithm == "A*" else d_star.run_d_star(graph, agents)
-
+    # a_star_multi.run_a_star_multi(graph, agents)
 
     # Visualize the results of the search algorithm
     vis_obj = vis.Visualization()
     vis_obj.animate_paths(planner_paths, graph)
-    #vis_obj.show_path(planner_paths, graph)
+    vis_obj.show_path(planner_paths, graph)
     metrics = None
     metrics = vis_obj.update_metrics(planner_paths, graph)
     
@@ -103,7 +103,7 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
     json_metrics = json.dumps(full_metrics, indent=4)
     
     if full_metrics['simulation results']['Total Dropoffs'] == full_metrics['simulation results']['Total Planned Drops']:
-        with open("c" + "metrics_D_" + str(time.time()) + ".json", 'w') as outfile:
+        with open("c" + "metrics_multi" + str(time.time()) + ".json", 'w') as outfile:
             outfile.write(json_metrics)
         print("Simulation Passed")
     else:
@@ -113,4 +113,4 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
 
 
 if __name__ == "__main__":
-    test_validation(algorithm="D*")
+    test_validation(algorithm="A*", num_agents=10)
