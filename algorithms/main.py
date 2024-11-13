@@ -71,7 +71,7 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
     # Visualize the results of the search algorithm
     vis_obj = vis.Visualization()
     # vis_obj.animate_paths(planner_paths, graph)
-    vis_obj.show_path(planner_paths, graph)
+    # vis_obj.show_path(planner_paths, graph)
     metrics = None
     metrics = vis_obj.update_metrics(planner_paths, graph)
     
@@ -79,7 +79,16 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
     max_dist = max(metrics['agent_distance'].values())
     speed = 1 # m/s
     delay = metrics['total_estops'] + metrics['total_dropoffs'] # seconds
-    metrics['time'] = (max_dist / speed) + delay
+    metrics['total_time'] = (max_dist / speed) + delay
+    metrics['agent_time'] = {}
+    metrics['agent_parcles_hour'] = {}
+
+    for agent, value in metrics['agent_distance'].items():
+        metrics["agent_time"][agent] = (value / speed) + metrics['estop'][agent] + (num_packages*2)-1
+        metrics['agent_parcles_hour'][agent] = (num_packages / metrics["agent_time"][agent]) * 3600
+
+    metrics['avg_parcels_hour'] = sum(metrics['agent_parcles_hour'].values()) / num_agents
+    metrics['avg_time'] = sum(metrics['agent_time'].values()) / num_agents
     # print(f"Time: {metrics['time']} seconds")
     # print(f"Agents: {len(agents)}")
     # print(f"Total distance: {sum(metrics['agent_distance'].values())}")
@@ -93,18 +102,22 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
         "Number of Robots": num_agents, 
         "Number of Nodes": graph.get_vertices_count(), 
         "simulation results": {
-            "Time": metrics['time'], 
+            "Total Time": metrics['total_time'], 
             "Total Distance": sum(metrics['agent_distance'].values()), 
             "Total Dropoffs": metrics['total_dropoffs'],
-            "Total Planned Drops": num_agents * (num_packages + 1)
+            "Total Planned Drops": num_agents * ((2*num_packages) - 1),
+            "Total E-Stops": metrics['total_estops'],
+            "Average Parcels per Hour": metrics['avg_parcels_hour'],
+            "Average Time per Agent": metrics['avg_time']
         }
     }
 
+    print(full_metrics['simulation results']["Total Planned Drops"])
     # write a json file with the metrics
     json_metrics = json.dumps(full_metrics, indent=4)
     
     if full_metrics['simulation results']['Total Dropoffs'] == full_metrics['simulation results']['Total Planned Drops']:
-        with open("metrics_" + algorithm + "_" + str(num_agents) + "_" + str(num_packages) + str(time.time()) + ".json", 'w') as outfile:
+        with open("metrics_" + algorithm + "_" + str(num_agents) + "_" + str(num_packages) + "__" + str(time.time()) + ".json", 'w') as outfile:
             outfile.write(json_metrics)
         print("Simulation Passed")
     else:
@@ -114,4 +127,4 @@ def test_validation(test_plan="Testing_1", num_agents=10, num_packages=2, algori
 
 
 if __name__ == "__main__":
-    test_validation(algorithm="Multi-A-star", num_agents=25, num_packages=2)
+    test_validation(algorithm="Multi_A-star", num_agents=15, num_packages=2)

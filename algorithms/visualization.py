@@ -14,6 +14,7 @@ class Visualization:
     # create metrics for the algorithms
     metrics = {}
     metrics['agent_distance'] = {}
+    metrics['estop'] = {}
     metrics['total_estops'] = 0
     metrics['total_replan'] = 0
     metrics['total_dropoffs'] = 0
@@ -36,6 +37,7 @@ class Visualization:
                 agents_paths[agent] = list(itertools.chain(*paths[agent]))
                 agent_info[agent] = 0
                 self.metrics['agent_distance'][agent] = 0
+                self.metrics['estop'][agent] = 0
 
         frame = 0
         done = False
@@ -64,6 +66,7 @@ class Visualization:
                                     del current_reservations[path[frame - agent_info[agent] - 1]]
 
                             self.metrics['total_estops'] += 1
+                            self.metrics['estop'][agent] += 1
                                 
                         else:
                             # If the node is reserved, wait for the other agent to move
