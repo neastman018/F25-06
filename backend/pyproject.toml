@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = "MDE website backend"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^1.26.4"
+fastapi = "^0.110.1"
+fastapi-responses = "^0.2.1"
+uvicorn = "0.29.0"
+pymongo = {extras = ["srv"], version = "^4.8.0"}
+python-dotenv = "^1.0.1"
+seaborn = "^0.13.2"
+sqlalchemy = "^2.0.34"
+colorama = "^0.4.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

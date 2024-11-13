@@ -5,7 +5,11 @@
   align-items: center;
   padding: 6rem;
   min-height: 100vh;
-  background-color: #d5dbd6;
+  background-image: url('/TorgBridge.jpg');
+  background-size: cover; /* Ensures the image covers the entire page */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-attachment: fixed; /* Ensures the background stays in place while scrolling */
 }
 
 .description {
@@ -17,7 +21,7 @@
   width: 100%;
   z-index: 2;
   font-family: "Eras Bold ITC", sans-serif;
-  color: rgb(var(--vt-maroon));
+  color: rgb(var(--white));
 
 
 }
@@ -33,7 +37,7 @@
   position: relative;
   margin: 0;
   padding: 1rem;
-  background-color: rgb(var(--vt-smoke));
+  background-color: rgb(var(--vt-maroon));
   border: 1px solid rgba(var(--callout-border-rgb), 0.10);
   border-radius: var(--border-radius);
 
@@ -46,7 +50,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
+  grid-template-columns: repeat(5, minmax(20%, auto));
   /* grid-template-rows: 300px 300px 300px; Example: 3 rows */
   /*width: 100vw; /*Sets the width of the grid to cover the entire viewport */
   /* height: 100vh; Sets the height of the grid to cover the entire viewport */
@@ -91,7 +95,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 4rem 0;
+  padding-top: 4rem;
+  padding: 2rem 0;
 }
 
 .center::before,
@@ -226,3 +231,21 @@
     transform: rotate(0deg);
   }
 }
+
+.flipCardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centers the cards */
+  gap: 10px; /* Adds space between cards */
+
+}
+
+.flipCardContainer > div {
+  flex: 1 1 150px; /* Controls the size and allows wrapping. Adjust the minimum width */
+  justify-content: space-around;
+  max-width: 300px; /* You can adjust the max width of the card */
+  min-width: 200px; /* Set the minimum width so cards don't shrink too much */
+}
+
+
+

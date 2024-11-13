@@ -7,11 +7,13 @@
   --background-start-rgb: 134, 31, 65;
   --background-end-rgb: 229, 117, 31;
 
+  --light-grey: 217, 217, 217;
+  --white: 255, 255, 255;
   --vt-maroon: 134,31,65;
   --vt-orange: 229, 117, 31;
   --vt-smoke: 229, 225, 230;
-  --primary-background-color: #d5dbd6;
-  --secondary-background-color: #ababab;
+  --primary-background-color: #ffffff;
+  --secondary-background-color: #ffffff;
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,

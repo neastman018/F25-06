@@ -1,0 +1,51 @@
+services:
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./frontend/app:/frontend/app
+  #     - ./frontend/public:/frontend/public
+  #   # command: tail -f /dev/null #For Debugging
+  #   command: npm run dev
+
+  backend: # Fast Api Server
+    build: ./backend
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend/app:/backend/app
+    #command: uvicorn main:app --reload
+    # Puts in blank shell states
+    command: poetry run uvicorn app.server:app --host 0.0.0.0 --port 4000 --reload
+    environment: 
+      - MONGO_URI=mongodb://mongoAdmin:m0ng0passw0rd@mongo:27017
+
+  mongo:
+    image: mongo:latest # Use the official MongoDB image
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoAdmin
+      MONGO_INITDB_ROOT_PASSWORD: m0ng0passw0rd
+      MONGO_INITDB_DATABASE: MDE
+    restart: always
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://mongoAdmin:m0ng0passw0rd@mongo:27017
+    depends_on:
+      - mongo
+
+volumes:
+  mongodata:
+    driver: local
+version: '3.7'
+
+
