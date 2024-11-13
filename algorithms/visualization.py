@@ -62,6 +62,8 @@ class Visualization:
                                 current_reservations[path[frame - agent_info[agent] - 1]].pop(0)
                                 if len(current_reservations[path[frame - agent_info[agent] - 1]]) == 0:
                                     del current_reservations[path[frame - agent_info[agent] - 1]]
+
+                            self.metrics['total_estops'] += 1
                                 
                         else:
                             # If the node is reserved, wait for the other agent to move
@@ -173,11 +175,23 @@ class Visualization:
 
                     # Check if the node is reserved
                     if frame > 0 and node in current_reservations and node != path[frame - agent_info[agent]['delay'] - 1]:
-                        # If the node is reserved, wait for the other agent to move
-                        agent_info[agent]['delay'] += 1
-                        prev_node = path[frame - agent_info[agent]['delay']]
-                        x, y = self.pos[prev_node]
-                        agent_info[agent]['offset'] = 0.05
+                        # check if the reservation is try to switch
+                        conflict_agent = current_reservations[node][0]
+                        if len(agents_paths[conflict_agent]) > (frame - agent_info[conflict_agent]['delay'] + 1) and agents_paths[conflict_agent][frame - agent_info[conflict_agent]['delay'] + 1] == path[frame - agent_info[agent]['delay'] - 1]:
+                            # allow for the agents to switch
+                            current_reservations[node].pop(0)
+                            current_reservations[node].insert(0, agent)
+                            if path[frame - agent_info[agent]['delay'] - 1] in current_reservations:
+                                current_reservations[path[frame - agent_info[agent]['delay'] - 1]].pop(0)
+                                if len(current_reservations[path[frame - agent_info[agent]['delay'] - 1]]) == 0:
+                                    del current_reservations[path[frame - agent_info[agent]['delay'] - 1]]
+                                
+                        else:
+                            # If the node is reserved, wait for the other agent to move
+                            agent_info[agent]['delay'] += 1
+                            prev_node = path[frame - agent_info[agent]['delay']]
+                            x, y = self.pos[prev_node]
+                            agent_info[agent]['offset'] = 0.05
                     else:
                         # Reserve the node using a stack of reservations
                         if node not in current_reservations:
@@ -259,7 +273,7 @@ class Visualization:
             plt.plot(path_x, path_y, marker='o', markersize=10, label=f"Agent {agent}")
         
         plt.title("Path from Start to Goal")
-        plt.legend()
+        # plt.legend()
         plt.show()
 
         # save the plot as an image
