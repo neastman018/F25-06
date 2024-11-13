@@ -13,9 +13,16 @@ def d_star(json_graph, start, goal, reservation_table):
     open_list = [(calculate_heuristic(json_graph.get_coords(start), json_graph.get_coords(goal)), start, 0)]
     g_values = {(start, 0): 0}
     predecessors = {}
+    visited = set()
 
     while open_list:
         current_cost, current, current_time = heapq.heappop(open_list)
+        print(f"Current node: {current}, Time: {current_time}, Cost: {current_cost}")
+
+        if (current) in visited:
+            continue
+
+        visited.add((current))
 
         if current == goal:
             return reconstruct_path(predecessors, current, current_time)
@@ -37,9 +44,9 @@ def d_star(json_graph, start, goal, reservation_table):
     return None
 
 def prune_open_list(open_list):
-    # Example pruning mechanism: remove nodes with high cost
-    threshold = 100  # Example threshold
-    return [item for item in open_list if item[0] < threshold]
+    N = 100  # Example threshold
+    open_list.sort(key=lambda x: x[0])
+    return open_list[:N]
 
 def is_occupied(node, time, reservation_table):
     return node in reservation_table and time in reservation_table[node]
@@ -61,11 +68,12 @@ def d_star_search(json_graph, src, dest):
 
 def run_d_star(json_graph, agents):
     paths = {}
+    reservation_table = {}
     for agent, routes in agents.items():
         paths[agent] = []
         for route in routes:
             src, dest = route
-            path = d_star(json_graph, src, dest, {})
+            path = d_star(json_graph, src, dest, reservation_table)
             paths[agent].append(path['path'])
             # print("Agent: " + str(agent) + ": Path found:", path)
 
